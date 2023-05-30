@@ -35,3 +35,39 @@ for (i in 1:nrow(linelist)) {
   cases_demographics[[i]] <- str_c(row_gender, row_age, sep = ",") #Join multiple character vector to a single character vector 
 }
 head(cases_demographics)
+
+# Create a containers
+# Empty vector
+delays <-
+  vector(mode = "double",
+         length = length(unique(linelist$hospital)))
+
+# Empty data frame
+delays1 <-
+  data.frame(matrix(ncol = 2, nrow = 3))
+
+# Empty list
+plots <-
+  vector(mode = "list", length = 16)
+
+# Printing
+for (hosp in hospital_names) {
+  hospital_cases <- linelist %>% filter(hospital == hosp)
+  print(nrow(hospital_cases))
+}
+
+# Looping plots
+# create 'incidence' object
+outbreak <- incidence2::incidence(   
+  x = linelist,                   # dataframe - complete linelist
+  date_index = date_onset,        # date column
+  interval = "week",              # aggregate counts weekly
+  groups = gender,                # group values by gender
+  na_as_group = TRUE)             # missing gender is own group
+
+# plot epi curve
+plot(outbreak,                       # name of incidence object
+     fill = "gender",                # color bars by gender
+     color = "black",                # outline color of bars
+     title = "Outbreak of ALL cases" # title
+)
