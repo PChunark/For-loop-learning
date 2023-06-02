@@ -14,7 +14,7 @@ hospital_names <- unique(linelist$hospital)
 
 # A for loop with character sequence
 for (hosp in hospital_names) {
-  
+  print(hosp)
 }
 
 #Print a number of NA in every columns
@@ -35,3 +35,17 @@ for (i in 1:nrow(linelist)) {
   cases_demographics[[i]] <- str_c(row_gender, row_age, sep = ",") #Join multiple character vector to a single character vector 
 }
 head(cases_demographics)
+
+#Create empty vector to store the median delay-to-admission
+
+delays <- 
+  vector(mode = "double", # We expect to store number
+         length = length(unique(linelist$hospital))) #the number of unique hospital in the dataset
+
+# Create empty data frame
+
+delays <- data.frame(matrix(ncol = 2, nrow = 3))
+
+# Create an empty list
+
+plots <- vector(mode = "list", length = 16)
